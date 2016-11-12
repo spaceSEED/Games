@@ -11,6 +11,7 @@ public class Room {
     ArrayList<Item> inside= new ArrayList<>();
 
     public Room(){
+        neswEdge[0]=-1;neswEdge[1]=-1;neswEdge[2]=-1;neswEdge[3]=-1;
         build();
     }
 
@@ -25,13 +26,29 @@ public class Room {
         neswEdge[1]=b;
         neswEdge[2]=c;
         neswEdge[3]=d;
-    }public int getNorth(){
+    }
+    public int getNorth(){
         return neswEdge[0];
-    }public int getSouth(){
+    }
+    public int getSouth(){
         return neswEdge[2];
-    }public int getEast(){
+    }
+    public int getEast(){
         return neswEdge[1];
-    }public int getWest(){
+    }
+    public int getWest(){
         return neswEdge[3];
+    }
+    public void setNorth(int a){
+        neswEdge[0]=a;
+    }
+    public void setSouth(int a){
+        neswEdge[2]=a;
+    }
+    public void setEast(int a){
+        neswEdge[1]=a;
+    }
+    public void setWest(int a){
+        neswEdge[3]=a;
     }
 }

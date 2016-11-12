@@ -8,13 +8,20 @@ public class Dungeon {
     Room[][][] dungeonMap=new Room[floors][15][15];
 
     public Dungeon(){
+        for(int z=0;z<floors;z++){
+            for(int y=0;y<dungeonMap[0].length;y++){
+                for(int x=0;x<dungeonMap[0][0].length;x++){
+                    dungeonMap[z][y][x]=new Room();
+                }
+            }
+        }
         generate();
     }
 
 
     public void generate(){
         Random ran=new Random();
-        Map<Integer,String> needed=new HashMap<>();
+        Map<Integer,String> needed=new HashMap<Integer, String>();
         needed.put(0,"d_stairs");
         needed.put(0,"u_stairs");
         needed.put(0,"chest");
@@ -23,29 +30,32 @@ public class Dungeon {
 
         for(int z=0;z<floors;z++){
 
-            pathFind(z,0,0,14,14);
+            fillPath(z,pathFind(z,0,0,14,14));
             for(int y=0;y<15;y++){
 
                 for(int x=0;x<15;x++){
                     Room[] near = getAdjacent(z,y,x);//[0]North [1]South [2]West [3]East
-                    dungeonMap[z][y][x]=new Room();
+                    //dungeonMap[z][y][x]=new Room();
                     int n; int s; int e; int w;
                     if(y==0){
                         n=Room.WALL;
                     }else{
-                        if (near[0] != null) {
-                            if (near[0].getSouth() == Room.WALL) {
-                                n = Room.WALL;
-                            } else if (near[0].getSouth() == Room.DOOR) {
-                                n = Room.DOOR;
-                            } else if (near[0].getSouth() == Room.OPEN) {
-                                n = Room.OPEN;
+                        if(dungeonMap[z][y][x].getNorth()==-1) {
+                            if (near[0] != null) {
+                                if (near[0].getSouth() == Room.WALL) {
+                                    n = Room.WALL;
+                                } else if (near[0].getSouth() == Room.DOOR) {
+                                    n = Room.DOOR;
+                                } else if (near[0].getSouth() == Room.OPEN) {
+                                    n = Room.OPEN;
+                                } else {
+
+                                    int r = ran.nextInt(100);
+
+                                }
                             } else {
-                                int r= ran.nextInt(100);
-
+                                
                             }
-                        }else{
-
                         }
 
                     }
@@ -56,6 +66,69 @@ public class Dungeon {
                     }
 
                 }
+            }
+        }
+    }
+
+    public int[] get(int floor,Room r){
+        for(int i=0;i<dungeonMap[0].length;i++){
+            for(int j=0;j<dungeonMap[0][0].length;j++){
+                if(r.equals(dungeonMap[floor][i][j])){
+                    int[] asdf={i,j};
+                    return asdf;
+                }
+            }
+        }
+    }
+
+    public void fillPath(int floor, List<Room> path){
+        Random ran = new Random();
+        for(int i=0;i<path.size()-1;i++){
+            int r=ran.nextInt(40);
+            int[] loc=get(floor,path.get(i));
+            int[] loc2=get(floor,path.get(i+1));
+            if(loc[0]==loc2[0]){
+                if(loc[1]>loc2[1]){
+                    int a=-1;
+                    if(r<30){
+                       a=Room.OPEN;
+                    }else{
+                        a=Room.DOOR;
+                    }
+                    dungeonMap[floor][loc[0]][loc[2]].setEast(a);
+                    dungeonMap[floor][loc2[0]][loc2[2]].setWest(a);
+                }else if(loc[1]<loc2[1]){
+                    int a=-1;
+                    if(r<30){
+                        a=Room.OPEN;
+                    }else{
+                        a=Room.DOOR;
+                    }
+                    dungeonMap[floor][loc[0]][loc[2]].setWest(a);
+                    dungeonMap[floor][loc2[0]][loc2[2]].setEast(a);
+                }
+            }else if(loc[1]==loc[1]){
+                if(loc[0]>loc2[0]){
+                    int a=-1;
+                    if(r<30){
+                        a=Room.OPEN;
+                    }else{
+                        a=Room.DOOR;
+                    }
+                    dungeonMap[floor][loc[0]][loc[2]].setSouth(a);
+                    dungeonMap[floor][loc2[0]][loc2[2]].setNorth(a);
+                }else if(loc[0]<loc2[0]){
+                    int a=-1;
+                    if(r<30){
+                        a=Room.OPEN;
+                    }else{
+                        a=Room.DOOR;
+                    }
+                    dungeonMap[floor][loc[0]][loc[2]].setNorth(a);
+                    dungeonMap[floor][loc2[0]][loc2[2]].setSouth(a);
+                }
+            }else{
+
             }
         }
     }
@@ -90,22 +163,23 @@ public class Dungeon {
     /**
      * Generates the path from stair a to b
      */
-    public void pathFind(int floor,int a, int b, int y, int x){
-        Graph pf= new SearchableGraphDFS();
+    public List<Room> pathFind(int floor,int a, int b, int y, int x){
+        Graph<Room,String> pf= new SearchableGraphDFS();
         for(int i=0;i<dungeonMap[0].length;i++){
             for(int j=0;j<dungeonMap[0][0].length;j++){
                 pf.addVertex(dungeonMap[floor][i][j]);
             }
         }for(int i=0;i<dungeonMap[0].length-1;i++){
             for(int j=0;j<dungeonMap[0][0].length-1;j++){
-                pf.edge(dungeonMap[floor][i][j],dungeonMap[floor][i][j+1]);
-                pf.edge(dungeonMap[floor][i][j],dungeonMap[floor][i-1][j]);
+                pf.addEdge(dungeonMap[floor][i][j],dungeonMap[floor][i][j+1],i+";"+j+","+(j+1));
+                pf.addEdge(dungeonMap[floor][i][j],dungeonMap[floor][i+1][j],i+","+(i+1)+";"+j);
             }
         }for(int j=0;j<dungeonMap[0].length-1;j++){
-            pf.edge(dungeonMap[floor][dungeonMap[0].length-1][j],dungeonMap[floor][dungeonMap[0].length-1][j+1]);
+            pf.addEdge(dungeonMap[floor][dungeonMap[0].length-1][j],dungeonMap[floor][dungeonMap[0].length-1][j+1],(dungeonMap[0].length-1)+";"+j+","+(j+1));
         }
 
-        List path =pf.shortestPath(dungeonMap[floor][a][b],dungeonMap[floor][y][x]);
+        return pf.shortestPath(dungeonMap[floor][a][b],dungeonMap[floor][y][x]);
+        
 
     }
 

@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.params=nm\ typ\ def\ wei
+comment0.target=Armor(java.lang.String,\ java.lang.String,\ int,\ int)
+comment1.params=
+comment1.target=int\ getDefense()
+comment2.params=
+comment2.target=boolean\ isEquipable()
+comment2.text=public\ String\ getType(){\r\n\ \ \ \ \ \ \ \ return\ type;\r\n}
+numComments=3

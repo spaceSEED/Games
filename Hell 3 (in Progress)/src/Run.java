@@ -6,6 +6,7 @@ public class Run {
     static Player player;
     static Scanner sc=new Scanner(System.in);
     public static void  main(String[] args){
+        Dungeon dun=new Dungeon();
         player=new Player();
         Random ran = new Random();
         int stepsTillBattle=ran.nextInt(10)+1;
@@ -30,7 +31,7 @@ public class Run {
     }
 
     public static void display(){
-        System.out.print("\f"+player.toString()+">> ");
+        System.out.print("\f"+player.toString()+"\n>> ");
         sc.nextLine();
 
     }
