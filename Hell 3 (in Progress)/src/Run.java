@@ -5,8 +5,9 @@ import java.util.*;
 public class Run {
     static Player player;
     static Scanner sc=new Scanner(System.in);
+    static  Dungeon dun=new Dungeon();
     public static void  main(String[] args){
-        Dungeon dun=new Dungeon();
+
         player=new Player();
         Random ran = new Random();
         int stepsTillBattle=ran.nextInt(10)+1;
@@ -31,13 +32,76 @@ public class Run {
     }
 
     public static void display(){
-        System.out.print("\f"+player.toString()+"\n>> ");
-        sc.nextLine();
+        String str="";
+        int[] coor=player.getCoordinates();
+        int dir=player.getFacing();
+
+        if(dun.getRoom(coor[0],coor[1],coor[2]).isOpening(dir)){
+            str+="Forward\t";
+        }
+        dir++;
+        if(dir>Player.LEFT){
+            dir=0;
+        }
+        if(dun.getRoom(coor[0],coor[1],coor[2]).isOpening(dir)){
+            str+="Right\t";
+        }dir++;
+        if(dir>Player.LEFT){
+            dir=0;
+        }
+        if(dun.getRoom(coor[0],coor[1],coor[2]).isOpening(dir)){
+            str+="Back\t";
+        }dir++;
+        if(dir>Player.LEFT){
+            dir=0;
+        }
+        if(dun.getRoom(coor[0],coor[1],coor[2]).isOpening(dir)){
+            str+="Left";
+        }
+        System.out.print("\f");
+        do {
+            System.out.print(player.toString() + "\n" + str + "\n>> ");
+            String input = sc.nextLine();
+            input = input.toLowerCase();
+            if (input.equals("forward") || input.equals("frwd") || input.contains("for") || input.equals("f")) {
+                if(str.contains("Forward")){
+                    player.move(Player.FORWARD);
+                    break;
+                }else{
+                    System.out.println("\fPlease input a valid Direction.");
+                }
+
+            } else if (input.equals("right") || input.equals("rt") || input.contains("ri") || input.equals("r")) {
+                if(str.contains("Right")){
+                    player.move(Player.RIGHT);
+                    break;
+                }else{
+                    System.out.println("\fPlease input a valid Direction.");
+                }
+
+            } else if (input.equals("left") || input.equals("lft") || input.contains("le") || input.equals("l")) {
+                if(str.contains("Left")){
+                    player.move(Player.LEFT);
+                    break;
+                }else{
+                    System.out.println("\fPlease input a valid Direction.");
+                }
+
+            } else if (input.equals("back") || input.equals("bk") || input.contains("ba") || input.equals("b")) {
+                if(str.contains("Back")){
+                    player.move(Player.BACKWARD);
+                    break;
+                }else{
+                    System.out.println("\fPlease input a valid Direction.");
+                }
+
+            }else{
+                System.out.println("\fPlease input a valid Direction.");
+            }
+        }while(true);
 
     }
-    public static void input(String in){
 
-    }
 
     static boolean eguard=false;
     static boolean pguard=false;

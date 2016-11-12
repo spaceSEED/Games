@@ -7,7 +7,7 @@ public class Room {
     static final int WALL=0;
     static final int DOOR=1;
     static final int OPEN =2;
-    int[] neswEdge=new int[4];//[0]=North,[1]=East,[2]=South,[3]=West
+    private int[] neswEdge=new int[4];//[0]=North,[1]=East,[2]=South,[3]=West
     ArrayList<Item> inside= new ArrayList<>();
 
     public Room(){
@@ -50,5 +50,11 @@ public class Room {
     }
     public void setWest(int a){
         neswEdge[3]=a;
+    }
+    public boolean isOpening(int a){
+        if(neswEdge[a]==OPEN||neswEdge[a]==DOOR){
+            return true;
+        }
+        return false;
     }
 }

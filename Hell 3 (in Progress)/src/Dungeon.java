@@ -5,7 +5,7 @@ import java.util.*;
  */
 public class Dungeon {
     final int floors=10;
-    Room[][][] dungeonMap=new Room[floors][15][15];
+    public Room[][][] dungeonMap=new Room[floors][15][15];
 
     public Dungeon(){
         for(int z=0;z<floors;z++){
@@ -16,6 +16,10 @@ public class Dungeon {
             }
         }
         generate();
+    }
+
+    public Room getRoom(int z,int y,int x){
+        return dungeonMap[z][y][x];
     }
 
 
@@ -36,7 +40,7 @@ public class Dungeon {
                 for(int x=0;x<15;x++){
                     Room[] near = getAdjacent(z,y,x);//[0]North [1]South [2]West [3]East
                     //dungeonMap[z][y][x]=new Room();
-                    int n; int s; int e; int w;
+                    int n=-1; int s=-1; int e=-1; int w=-1;
                     if(y==0){
                         n=Room.WALL;
                     }else{
@@ -51,6 +55,13 @@ public class Dungeon {
                                 } else {
 
                                     int r = ran.nextInt(100);
+                                    if(r<30){
+                                        n = Room.DOOR;
+                                    }else if(r<80){
+                                        n = Room.OPEN;
+                                    }else{
+                                        n = Room.WALL;
+                                    }
 
                                 }
                             } else {
@@ -62,6 +73,95 @@ public class Dungeon {
                     if(x==0){
                         w=Room.WALL;
                     }else{
+                        if(dungeonMap[z][y][x].getWest()==-1) {
+                            if (near[2] != null) {
+                                if (near[2].getEast() == Room.WALL) {
+                                    w = Room.WALL;
+                                } else if (near[2].getEast() == Room.DOOR) {
+                                    w = Room.DOOR;
+                                } else if (near[2].getEast() == Room.OPEN) {
+                                    w = Room.OPEN;
+                                } else {
+
+                                    int r = ran.nextInt(100);
+                                    if(r<30){
+                                        w = Room.DOOR;
+                                    }else if(r<80){
+                                        w = Room.OPEN;
+                                    }else{
+                                        w = Room.WALL;
+                                    }
+
+                                }
+                            } else {
+
+                            }
+                        }
+
+                    }
+                    if(x==dungeonMap[z][y].length-1){
+                        e=Room.WALL;
+                    }else{
+                        if(dungeonMap[z][y][x].getEast()==-1) {
+                            if (near[3] != null) {
+                                if (near[3].getWest() == Room.WALL) {
+                                    e = Room.WALL;
+                                } else if (near[3].getWest() == Room.DOOR) {
+                                    e = Room.DOOR;
+                                } else if (near[3].getWest() == Room.OPEN) {
+                                    e = Room.OPEN;
+                                } else {
+
+                                    int r = ran.nextInt(100);
+                                    if(r<30){
+                                        e= Room.DOOR;
+                                    }else if(r<80){
+                                        e = Room.OPEN;
+                                    }else{
+                                        e = Room.WALL;
+                                    }
+
+                                }
+                            } else {
+
+                            }
+                        }
+
+                    }
+                    if(y==dungeonMap[z].length-1){
+                        s=Room.WALL;
+                    }else{
+                        if(dungeonMap[z][y][x].getSouth()==-1) {
+                            if (near[1] != null) {
+                                if (near[1].getNorth() == Room.WALL) {
+                                    s = Room.WALL;
+                                } else if (near[1].getNorth() == Room.DOOR) {
+                                    s = Room.DOOR;
+                                } else if (near[1].getNorth() == Room.OPEN) {
+                                    s = Room.OPEN;
+                                } else {
+
+                                    int r = ran.nextInt(100);
+                                    if(r<30){
+                                        s = Room.DOOR;
+                                    }else if(r<80){
+                                        s = Room.OPEN;
+                                    }else{
+                                        s = Room.WALL;
+                                    }
+
+                                }
+                            } else {
+
+                            }
+
+
+                        }
+
+
+
+                        dungeonMap[z][y][x].setEdges(n,e,s,w);
+
 
                     }
 
@@ -79,6 +179,7 @@ public class Dungeon {
                 }
             }
         }
+        return null;
     }
 
     public void fillPath(int floor, List<Room> path){
@@ -95,8 +196,8 @@ public class Dungeon {
                     }else{
                         a=Room.DOOR;
                     }
-                    dungeonMap[floor][loc[0]][loc[2]].setEast(a);
-                    dungeonMap[floor][loc2[0]][loc2[2]].setWest(a);
+                    dungeonMap[floor][loc[0]][loc[1]].setEast(a);
+                    dungeonMap[floor][loc2[0]][loc2[1]].setWest(a);
                 }else if(loc[1]<loc2[1]){
                     int a=-1;
                     if(r<30){
@@ -104,8 +205,8 @@ public class Dungeon {
                     }else{
                         a=Room.DOOR;
                     }
-                    dungeonMap[floor][loc[0]][loc[2]].setWest(a);
-                    dungeonMap[floor][loc2[0]][loc2[2]].setEast(a);
+                    dungeonMap[floor][loc[0]][loc[1]].setWest(a);
+                    dungeonMap[floor][loc2[0]][loc2[1]].setEast(a);
                 }
             }else if(loc[1]==loc[1]){
                 if(loc[0]>loc2[0]){
@@ -115,8 +216,8 @@ public class Dungeon {
                     }else{
                         a=Room.DOOR;
                     }
-                    dungeonMap[floor][loc[0]][loc[2]].setSouth(a);
-                    dungeonMap[floor][loc2[0]][loc2[2]].setNorth(a);
+                    dungeonMap[floor][loc[0]][loc[1]].setSouth(a);
+                    dungeonMap[floor][loc2[0]][loc2[1]].setNorth(a);
                 }else if(loc[0]<loc2[0]){
                     int a=-1;
                     if(r<30){
@@ -124,8 +225,8 @@ public class Dungeon {
                     }else{
                         a=Room.DOOR;
                     }
-                    dungeonMap[floor][loc[0]][loc[2]].setNorth(a);
-                    dungeonMap[floor][loc2[0]][loc2[2]].setSouth(a);
+                    dungeonMap[floor][loc[0]][loc[1]].setNorth(a);
+                    dungeonMap[floor][loc2[0]][loc2[1]].setSouth(a);
                 }
             }else{
 
@@ -164,7 +265,7 @@ public class Dungeon {
      * Generates the path from stair a to b
      */
     public List<Room> pathFind(int floor,int a, int b, int y, int x){
-        Graph<Room,String> pf= new SearchableGraphDFS();
+        Graph<Room,String> pf= new SearchableGraphBFS();
         for(int i=0;i<dungeonMap[0].length;i++){
             for(int j=0;j<dungeonMap[0][0].length;j++){
                 pf.addVertex(dungeonMap[floor][i][j]);
@@ -280,4 +381,5 @@ public class Dungeon {
 
         return str;
     }
+
 }
