@@ -74,6 +74,7 @@ public class Run {
             } else if (input.equals("right") || input.equals("rt") || input.contains("ri") || input.equals("r")) {
                 if(str.contains("Right")){
                     player.move(Player.RIGHT);
+                    player.turnRight();
                     break;
                 }else{
                     System.out.println("\fPlease input a valid Direction.");
@@ -82,6 +83,7 @@ public class Run {
             } else if (input.equals("left") || input.equals("lft") || input.contains("le") || input.equals("l")) {
                 if(str.contains("Left")){
                     player.move(Player.LEFT);
+                    player.turnLeft();
                     break;
                 }else{
                     System.out.println("\fPlease input a valid Direction.");
@@ -90,6 +92,7 @@ public class Run {
             } else if (input.equals("back") || input.equals("bk") || input.contains("ba") || input.equals("b")) {
                 if(str.contains("Back")){
                     player.move(Player.BACKWARD);
+                    player.turnBack();
                     break;
                 }else{
                     System.out.println("\fPlease input a valid Direction.");
@@ -151,6 +154,7 @@ public class Run {
             }
             e.loseHP(dam);
             System.out.println(e.getName()+" took "+dam+" points of damage.");
+            again=false;
         }else if(in.equals("c")||in.equals("cast")||in.equals("cst")||in.indexOf("ca")>=0){
             int i=0;
             System.out.println(e.toString()+"\n==========vs==========\n"+p.toString()+"\n\tSpells\n-1) Back\t--");
@@ -189,15 +193,21 @@ public class Run {
                 }
                 e.loseHP(dam);
                 System.out.println(p.getName()+" cast "+p.getSpellList().get(0).getName()+".\n"+e.getName()+" took "+dam+" points of damage.");
+                again=false;
             }
         }else if(in.equals("g")||in.equals("guard")||in.equals("grd")||in.indexOf("gu")>=0){
 
             System.out.println(p.getName()+" guarded himself.");
             pguard=true;
+            again=false;
         }else if(in.equals("f")||in.equals("flee")||in.equals("fle")||in.indexOf("fl")>=0){
             System.out.println("Got away successfully!");
-           // return true;
-        }}while(again);
+           again=false;
+        }else{
+            System.out.println("Please inter a valid command.");
+            again=true;
+        }
+        }while(again);
 
 
     }

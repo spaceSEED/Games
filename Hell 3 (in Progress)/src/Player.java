@@ -70,6 +70,39 @@ public class Player extends Character {
         coordinates[1]=y;
         coordinates[2]=x;
     }
+    public void turnBack(){
+        if(facing==FORWARD){
+            facing=BACKWARD;
+        }else if(facing==LEFT){
+            facing=RIGHT;
+        }else if(facing==RIGHT){
+            facing=LEFT;
+        }else{
+            facing=FORWARD;
+        }
+    }
+    public void turnLeft(){
+        if(facing==FORWARD){
+            facing=LEFT;
+        }else if(facing==LEFT){
+            facing=BACKWARD;
+        }else if(facing==RIGHT){
+            facing=FORWARD;
+        }else{
+            facing=RIGHT;
+        }
+    }
+    public void turnRight(){
+        if(facing==FORWARD){
+            facing=RIGHT;
+        }else if(facing==LEFT){
+            facing=FORWARD;
+        }else if(facing==RIGHT){
+            facing=BACKWARD;
+        }else{
+            facing=LEFT;
+        }
+    }
 
     public int[] getCoordinates(){
         return coordinates;

@@ -3,6 +3,14 @@
  */
 public class Enemy extends NPC {
     String atkName=" attacked";
+    String name="";
+
+    public Enemy(){
+        setName("demon");
+    }
+
+
+
 
 
     public String getAttackName(){

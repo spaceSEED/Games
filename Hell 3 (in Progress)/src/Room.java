@@ -15,6 +15,8 @@ public class Room {
         build();
     }
 
+
+
     public void build(){
         Random ran = new Random();
         for(int r=0;r<neswEdge.length;r++){

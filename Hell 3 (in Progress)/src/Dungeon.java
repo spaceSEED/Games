@@ -40,7 +40,7 @@ public class Dungeon {
                 for(int x=0;x<15;x++){
                     Room[] near = getAdjacent(z,y,x);//[0]North [1]South [2]West [3]East
                     //dungeonMap[z][y][x]=new Room();
-                    int n=-1; int s=-1; int e=-1; int w=-1;
+                    int n=dungeonMap[z][y][x].getNorth(); int s=dungeonMap[z][y][x].getSouth(); int e=dungeonMap[z][y][x].getEast(); int w=dungeonMap[z][y][x].getWest();
                     if(y==0){
                         n=Room.WALL;
                     }else{
@@ -271,7 +271,7 @@ public class Dungeon {
                 pf.addVertex(dungeonMap[floor][i][j]);
             }
         }for(int i=0;i<dungeonMap[0].length-1;i++){
-            for(int j=0;j<dungeonMap[0][0].length-1;j++){
+            for(int j=0;j<dungeonMap[0][0].length-1;j++){//attaches edges: to make more complex paths I could remove edges.
                 pf.addEdge(dungeonMap[floor][i][j],dungeonMap[floor][i][j+1],i+";"+j+","+(j+1));
                 pf.addEdge(dungeonMap[floor][i][j],dungeonMap[floor][i+1][j],i+","+(i+1)+";"+j);
             }
