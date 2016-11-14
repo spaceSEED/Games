@@ -9,6 +9,7 @@ public class Room {
     static final int OPEN =2;
     private int[] neswEdge=new int[4];//[0]=North,[1]=East,[2]=South,[3]=West
     ArrayList<Item> inside= new ArrayList<>();
+    String description;
 
     public Room(){
         neswEdge[0]=-1;neswEdge[1]=-1;neswEdge[2]=-1;neswEdge[3]=-1;
@@ -16,6 +17,9 @@ public class Room {
     }
 
 
+    public String getDescription(){
+        return description;
+    }
 
     public void build(){
         Random ran = new Random();

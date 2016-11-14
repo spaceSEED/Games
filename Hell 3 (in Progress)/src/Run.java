@@ -1,4 +1,7 @@
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.*;
+import java.io.*;
 /**
  * Created by Liam on 11/6/2016.
  */
@@ -60,7 +63,7 @@ public class Run {
         }
         System.out.print("\f");
         do {
-            System.out.print(player.toString() + "\n" + str + "\n>> ");
+            System.out.print(player.toString() + "\n" +dun.getRoom(coor[0],coor[1],coor[2]).getDescription()+"\n"+ str + "\n>> ");
             String input = sc.nextLine();
             input = input.toLowerCase();
             if (input.equals("forward") || input.equals("frwd") || input.contains("for") || input.equals("f")) {
@@ -68,7 +71,7 @@ public class Run {
                     player.move(Player.FORWARD);
                     break;
                 }else{
-                    System.out.println("\fPlease input a valid Direction.");
+                    System.out.println("\fPlease input a valid Command (type help for options).");
                 }
 
             } else if (input.equals("right") || input.equals("rt") || input.contains("ri") || input.equals("r")) {
@@ -77,8 +80,14 @@ public class Run {
                     player.turnRight();
                     break;
                 }else{
-                    System.out.println("\fPlease input a valid Direction.");
+                    System.out.println("\fPlease input a valid Command (type help for options).");
                 }
+
+            }else if (input.equals("help") || input.equals("hlp") || input.contains("he") || input.equals("h")) {
+                help();
+
+            } else if (input.equals("quit") || input.equals("qt") || input.contains("qu") || input.equals("q")) {
+                quit();
 
             } else if (input.equals("left") || input.equals("lft") || input.contains("le") || input.equals("l")) {
                 if(str.contains("Left")){
@@ -86,7 +95,7 @@ public class Run {
                     player.turnLeft();
                     break;
                 }else{
-                    System.out.println("\fPlease input a valid Direction.");
+                    System.out.println("\fPlease input a valid Command (type help for options).");
                 }
 
             } else if (input.equals("back") || input.equals("bk") || input.contains("ba") || input.equals("b")) {
@@ -95,13 +104,49 @@ public class Run {
                     player.turnBack();
                     break;
                 }else{
-                    System.out.println("\fPlease input a valid Direction.");
+                    System.out.println("\fPlease input a valid Command (type help for options).");
                 }
 
             }else{
-                System.out.println("\fPlease input a valid Direction.");
+                System.out.println("\fPlease input a valid Command (type help for options).");
             }
         }while(true);
+
+    }
+
+    public static void help(){
+        System.out.println("\fCommand List:\nhelp (h) - displays command list\n" +
+                "forward (f) - moves forward if available\nback (b) - moves back if available\n" +
+                "left (l) - moves left if available\nright (r) - moves right if available\n" +
+                "inven (i) - displays player inventory\nequip (e) - equips named item from inventory\n"+
+                "use (u) - uses named item in room or inventory (ie stairs, chests, potions)\n" +
+                "talk (t) - speaks to an NPC of Merchant\nquit (q) - quits the game\nsave (s) - saves game to named file\n" +
+                "load -loads an available save file");
+    }
+
+    public static void quit(){
+        System.out.print("\fAre you sure you want to quit? (Y/N)\n>>");
+        String input = sc.nextLine();
+        input = input.toLowerCase();
+        if(input.contains("y")){
+            System.out.println("Goodbye.");
+            System.exit(0);
+        }else{
+            System.out.print("\f");
+        }
+    }
+
+    public static void save(){
+        String filePath="";
+        try {
+            PrintWriter out = new PrintWriter(new File(filePath));
+
+
+        }catch(FileNotFoundException fnfe){
+
+        }
+    }
+    public static void load(){
 
     }
 

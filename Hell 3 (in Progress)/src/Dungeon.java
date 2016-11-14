@@ -17,6 +17,9 @@ public class Dungeon {
         }
         generate();
     }
+    public Dungeon(Room[][][] load){
+        dungeonMap=load;
+    }
 
     public Room getRoom(int z,int y,int x){
         return dungeonMap[z][y][x];
