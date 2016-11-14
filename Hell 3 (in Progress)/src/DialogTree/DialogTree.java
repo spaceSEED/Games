@@ -1,4 +1,4 @@
-package DialogTree;
+package src.DialogTree;
 
 import java.io.*;
 import java.util.*;

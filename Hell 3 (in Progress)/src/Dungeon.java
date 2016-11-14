@@ -1,4 +1,6 @@
-import  Graph.*;
+package src;
+
+import  src.Graph.*;
 import java.util.*;
 /**
  * Created by Liam on 11/9/2016.

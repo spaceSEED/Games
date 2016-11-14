@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=
+comment0.target=DialogTree()
+comment1.params=filePath
+comment1.target=DialogTree(java.lang.String)
+comment2.params=
+comment2.target=DialogTree.DialogNode\ getRoot()
+comment3.params=filePath
+comment3.target=void\ buildFromFile(java.lang.String)
+numComments=4

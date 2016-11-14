@@ -1,3 +1,5 @@
+package src;
+
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.*;
@@ -10,8 +12,11 @@ public class Run {
     static Scanner sc=new Scanner(System.in);
     static  Dungeon dun=new Dungeon();
     public static void  main(String[] args){
-
-        player=new Player();
+        System.out.println("Hell 3\n-Press Any Key to Continue-");
+        sc.nextLine();
+        System.out.print("What is your name?\n>>");
+        String name =sc.nextLine();
+        player=new Player(name);
         Random ran = new Random();
         int stepsTillBattle=ran.nextInt(10)+1;
         while(true){
@@ -179,7 +184,7 @@ public class Run {
 
         }
         if(e.getHP()<=0){
-        return true;
+            return true;
         }
         return false;
     }

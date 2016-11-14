@@ -1,3 +1,5 @@
+package src;
+
 import java.util.*;
 /**
  * Created by Liam on 11/6/2016.
@@ -31,6 +33,7 @@ public class Character {
         health=100;hp=health;
 
     }
+    
 
     public int getStrength(){return strength;}
     public int getAgility(){return agility;}

@@ -1,4 +1,6 @@
-import DialogTree.*;
+package src;
+
+import src.DialogTree.*;
 import java.util.*;
 
 /**

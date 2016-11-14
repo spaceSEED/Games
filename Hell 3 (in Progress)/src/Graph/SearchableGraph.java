@@ -1,4 +1,4 @@
-package Graph;
+package src.Graph;
 import java.util.List;
 
 public interface SearchableGraph<V, E> extends IGraph<V, E> {

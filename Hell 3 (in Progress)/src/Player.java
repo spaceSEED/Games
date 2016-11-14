@@ -1,3 +1,5 @@
+package src;
+
 import java.util.*;
 /**
  * Created by Liam on 11/6/2016.
@@ -16,6 +18,10 @@ public class Player extends Character {
                 coordinates[0]=0;
                 coordinates[1]=0;
                 coordinates[2]=0;
+            }
+            public Player(String name){
+                this();
+                setName(name);
             }
 
 
