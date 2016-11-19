@@ -1,4 +1,4 @@
-package src.DialogTree;
+package DialogTree;
 
 /**
  * Created by Liam on 11/12/2016.

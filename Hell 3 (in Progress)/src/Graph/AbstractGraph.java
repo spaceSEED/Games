@@ -1,7 +1,7 @@
 /** Built by Mr. Aronson
  * 
  */
-package src.Graph;
+package Graph;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

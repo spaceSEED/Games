@@ -1,8 +1,4 @@
-package src;
 
-/**
- * Created by Liam on 11/6/2016.
- */
 public class Weapon extends Item implements Equipable{
     String type="";
     int attack=0;

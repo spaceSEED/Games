@@ -1,4 +1,4 @@
-package src;
+
 
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -91,6 +91,9 @@ public class Run {
             }else if (input.equals("help") || input.equals("hlp") || input.contains("he") || input.equals("h")) {
                 help();
 
+            } else if (input.equals("inventory") || input.equals("inv") || input.contains("inven") || input.equals("i")) {
+                inven();
+
             } else if (input.equals("quit") || input.equals("qt") || input.contains("qu") || input.equals("q")) {
                 quit();
 
@@ -127,6 +130,18 @@ public class Run {
                 "use (u) - uses named item in room or inventory (ie stairs, chests, potions)\n" +
                 "talk (t) - speaks to an NPC of Merchant\nquit (q) - quits the game\nsave (s) - saves game to named file\n" +
                 "load -loads an available save file");
+    }
+    public static void inven(){
+        if(player.getInven().size()<=0){
+            System.out.println(player.getName()+"'s Inventory is empty.");
+        }else {
+            System.out.println("name\tweight\tworth");
+            int i = 0;
+            for (Item itm : player.getInven()) {
+                System.out.println(i + ") " + itm.toString());
+                i++;
+            }
+        }
     }
 
     public static void quit(){
@@ -207,7 +222,7 @@ public class Run {
             again=false;
         }else if(in.equals("c")||in.equals("cast")||in.equals("cst")||in.indexOf("ca")>=0){
             int i=0;
-            System.out.println(e.toString()+"\n==========vs==========\n"+p.toString()+"\n\tSpells\n-1) Back\t--");
+            System.out.println(e.toString()+"\n==========vs==========\n"+p.toString()+"\n\tSpells\tCost\n-1) Back\t--");
             for (Spell spell :p.getSpellList() ) {
 
                 System.out.println(i+") "+spell.getName()+"\t"+spell.getCost());

@@ -1,4 +1,4 @@
-package src.Graph;
+package Graph;
 /** Built by Mr. Aronson
  * 
   Represents information stored in each edge. */
