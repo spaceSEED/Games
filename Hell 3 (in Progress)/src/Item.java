@@ -1,4 +1,4 @@
-package src;
+
 
 /**
  * Created by Liam on 11/6/2016.
@@ -6,6 +6,7 @@ package src;
 public class Item {
     String name="";
     int weight=0;
+    int worth=0;
 
     public Item(String name){
         this.name= name;
@@ -18,5 +19,9 @@ public class Item {
 
     public boolean isEquipable(){
         return false;
+    }
+
+    public String toString(){
+        return name+"\t"+weight+"\t"+worth;
     }
 }

@@ -1,4 +1,4 @@
-package src;
+
 
 import java.util.*;
 /**
@@ -163,5 +163,8 @@ public class Character {
 
     public String toString(){
         return "\t"+getName()+"\nHealth: "+getHP()+"\tMana: "+getMana();
+    }
+    public ArrayList<Item> getInven(){
+        return inventory;
     }
 }

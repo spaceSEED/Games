@@ -1,6 +1,6 @@
-package src;
 
-import src.DialogTree.*;
+
+import DialogTree.*;
 import java.util.*;
 
 /**

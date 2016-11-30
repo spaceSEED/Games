@@ -1,4 +1,4 @@
-package src.Graph;
+package Graph;
 import java.util.*;
 
 public interface IGraph<V, E> {
