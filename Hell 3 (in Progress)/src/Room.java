@@ -11,7 +11,7 @@ public class Room {
     static final int OPEN =2;
     private int[] neswEdge=new int[4];//[0]=North,[1]=East,[2]=South,[3]=West
     ArrayList<Item> inside= new ArrayList<>();
-    String description;
+    //String description;
 
     public Room(){
         neswEdge[0]=-1;neswEdge[1]=-1;neswEdge[2]=-1;neswEdge[3]=-1;
@@ -20,6 +20,35 @@ public class Room {
 
 
     public String getDescription(){
+        String description="=========================\n";
+        for(int y=0;y<6;y++){
+            for(int x=0;x<15;x++){
+                if(x==8&&y>1&&y<4){
+                    if(y==2){description+="o";}else if(y==3){description+="X";}
+                }else if(neswEdge[0]==WALL&&x>4&&x<12&&(y==1)){
+                    description+="=";
+                }else if(neswEdge[2]==WALL&&x>4&&x<12&&(y==4)){
+                    description+="=";
+                }else if(neswEdge[2]==WALL&&x>4&&x==12&&(y==4)){
+                    description+=" ";
+                }else if(neswEdge[0]==WALL&&x>4&&x==12&&(y==1)){
+                    description+=" ";
+                }else if(neswEdge[3]==WALL&&y>1&&y<4&&(x==5)){
+                    description+="|";
+                }else if(neswEdge[1]==WALL&&y>1&&y<4&&(x==9)){
+                    description+="   | +";
+                }else if(neswEdge[1]==WALL&&y>1&&y<4&&(x>9)){
+
+                }else if(y>0&&y<5&&x>3&&x<12){
+                    description+=" ";
+                }else{
+                    description+="+";
+                }
+            }
+            description+="\n";
+        }
+
+        description+="=========================";
         return description;
     }
 

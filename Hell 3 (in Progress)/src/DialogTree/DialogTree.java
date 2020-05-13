@@ -28,7 +28,7 @@ public class DialogTree {
      * parse a file containing a dialog tree (up to 6 branches)
      * format:
      *      [root phrase]
-     *      1-6: [text] ; [effect]
+     *      1-6: [text] ;[effect]
      *      [numbers reset on next node]
      * number: indicates which child this branch leads to
      * [text]: the text to display

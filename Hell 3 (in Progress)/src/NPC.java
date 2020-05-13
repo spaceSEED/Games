@@ -45,6 +45,7 @@ public class NPC extends Character {
                 prev.push(temp);
                 temp=temp.getNode(5);
             }
+            temp.activate();
         }
     }
 }

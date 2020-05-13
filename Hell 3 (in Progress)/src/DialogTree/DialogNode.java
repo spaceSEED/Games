@@ -27,6 +27,8 @@ public class DialogNode {
             //
         }else if(effect.equals("flatter")){
             //
+        }else if (effect.equals("exit")){
+            //exit dialog tree
         }else{//if null or something
             //do nothing
         }

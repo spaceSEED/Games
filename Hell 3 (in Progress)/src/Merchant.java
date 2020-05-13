@@ -1,5 +1,7 @@
 
 
+import DialogTree.DialogTree;
+
 import java.util.*;
 /**
  * Write a description of class Merchant here.
@@ -13,5 +15,8 @@ public class Merchant extends NPC
     
     public Merchant()
     {
+        conversation=new DialogTree("merchant.dt");
     }
+
+
 }
