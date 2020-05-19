@@ -20,9 +20,9 @@ public class Room {
 
 
     public String getDescription(){
-        String description="=========================\n";
+        String description="===================\n";
         for(int y=0;y<6;y++){
-            for(int x=0;x<15;x++){
+            for(int x=0;x<18;x++){
                 if(x==8&&y>1&&y<4){
                     if(y==2){description+="o";}else if(y==3){description+="X";}
                 }else if(neswEdge[0]==WALL&&x>4&&x<12&&(y==1)){
@@ -36,7 +36,7 @@ public class Room {
                 }else if(neswEdge[3]==WALL&&y>1&&y<4&&(x==5)){
                     description+="|";
                 }else if(neswEdge[1]==WALL&&y>1&&y<4&&(x==9)){
-                    description+="   | +";
+                    description+="   | ++++";
                 }else if(neswEdge[1]==WALL&&y>1&&y<4&&(x>9)){
 
                 }else if(y>0&&y<5&&x>3&&x<12){
@@ -48,7 +48,7 @@ public class Room {
             description+="\n";
         }
 
-        description+="=========================";
+        description+="===================";
         return description;
     }
 

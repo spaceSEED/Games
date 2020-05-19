@@ -7,9 +7,12 @@ import java.util.*;
 public class Character {
     protected boolean alive=true;
     protected String name;
+    int level=1;
     int strength,agility,charisma,intelligence,defense,endurance,wisdom, dexterity;
     double health,hp;
     double mana,remMana;
+    double experience=0;
+    double levelup=level*100;
     ArrayList<Item> inventory=new ArrayList<Item>();
     Map<String,Equipable> equipped=new HashMap<String,Equipable>();
     int[] position = new int[3];
@@ -33,8 +36,24 @@ public class Character {
         health=100;hp=health;
 
     }
-    
 
+    public void incXP(double xp){
+        System.out.println(name+" gained "+xp+" xp.");
+        experience+=xp;
+        while(experience>=levelup){
+            experience=experience-levelup;
+            System.out.println(name+" leveled up to level "+level+".");
+            levelUp();
+        }
+    }
+
+    public void boostattributes(){//TODO level up
+        System.out.println("Which attribute would you like to improve?");
+
+    }
+    
+    public int getLevel(){ return level;}
+    public void levelUp(){level++; boostattributes(); levelup=100*level;}
     public int getStrength(){return strength;}
     public int getAgility(){return agility;}
     public int getCharisma(){return charisma;}
@@ -60,18 +79,23 @@ public class Character {
     public void loseHP(double n){
         hp-=n;
     }
+    public void gainHP(double n){ hp+=n; if(hp>health){hp=health;}}
     public void incHealth(double h){
         health+=h;
     }
     public double getMana(){
+        return mana;
+    }
+    public double getRemMana(){
         return remMana;
     }
-    public void loseMana(double n){
+    public void loseRemMana(double n){
         remMana-=n;
     }
     public void incMana(double h){
         mana+=h;
     }
+    public void gainRemMana(double n){ remMana+=n; if(remMana>mana){remMana=mana;}}
 
     public String getName(){
         return name;

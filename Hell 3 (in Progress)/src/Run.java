@@ -23,9 +23,21 @@ public class Run {
             display();
             if(stepsTillBattle<=0){
                 stepsTillBattle=ran.nextInt(10)+1;
-                if(!battle(player,new Enemy())){
+                Enemy e=new Enemy();
+                if(!battle(player,e)){
                     System.out.println("=====GAME OVER=====\n"+player.getName()+" died in battle.");
                     break;
+                }else{//drop item/gainxp
+                    player.incXP(e.getXp());
+                    Item drop=Item.generate();
+                    System.out.println(e.getName()+" dropped "+drop.toString()+".\nDo you want to pick it up? (Y/N)");
+                    String input = sc.nextLine();
+                    input = input.toLowerCase();
+                    if(input.contains("y")){//yes
+
+                    }else{//no
+
+                    }
                 }
             }else{
 
@@ -250,7 +262,7 @@ public class Run {
 
 
                 int dam=p.getSpellList().get(g).cast();
-                p.loseMana(p.getSpellList().get(g).getCost());
+                p.loseRemMana(p.getSpellList().get(g).getCost());
                 if(eguard==false) {
                    dam-=e.getDefense()/10;
                 }else{

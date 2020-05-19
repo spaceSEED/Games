@@ -13,6 +13,10 @@ public class Weapon extends Item implements Equipable{
         speed=spd;
     }
 
+    public String toString(){
+        return name+"\t(atk: "+attack+"; range: "+range+"; spd: "+speed+"; "+weight+"lbs; "+worth+" gold)";
+    }
+
     /*public String getType(){
         return type;
     }*/

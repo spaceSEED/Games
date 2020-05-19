@@ -6,6 +6,8 @@
 public class Enemy extends NPC {
     String atkName=" attacked";
     String name="";
+    int level=1;
+    double xp=0;
 
     public Enemy(){
         setName("demon");
@@ -18,4 +20,6 @@ public class Enemy extends NPC {
     public String getAttackName(){
         return atkName;
     }
+    public String getName(){return name;}
+    public double getXp(){return xp;}
 }
