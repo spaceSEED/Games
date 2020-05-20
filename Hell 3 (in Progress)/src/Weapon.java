@@ -5,8 +5,8 @@ public class Weapon extends Item implements Equipable{
     int range=0;
     int speed=0;
 
-    public Weapon(String nm, String typ, int atk, int ran, int spd ){
-        super(nm);
+    public Weapon(String nm, String typ, int atk, int ran, int spd, int wei, int cost ){
+        super(nm,wei,cost);
         type=typ;
         attack=atk;
         range=ran;

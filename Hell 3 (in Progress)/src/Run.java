@@ -14,9 +14,18 @@ public class Run {
     public static void  main(String[] args){
         System.out.println("Hell 3\n-Press Any Key to Continue-");
         sc.nextLine();
-        System.out.print("What is your name?\n>>");
-        String name =sc.nextLine();
-        player=new Player(name);
+        System.out.print("Would you like to load a game? (Y/N)\n>>");
+        String input=sc.nextLine();
+        if(input.contains("y")) {
+            System.out.print("Please provide the filepath you would like to load:\n>>");
+            input=sc.nextLine();
+            load(input);
+        }else {
+            System.out.print("What is your name?\n>>");
+            String name = sc.nextLine();
+            player = new Player(name);
+        }
+        
         Random ran = new Random();
         int stepsTillBattle=ran.nextInt(10)+1;
         while(true){
@@ -31,10 +40,34 @@ public class Run {
                     player.incXP(e.getXp());
                     Item drop=Item.generate();
                     System.out.println(e.getName()+" dropped "+drop.toString()+".\nDo you want to pick it up? (Y/N)");
-                    String input = sc.nextLine();
+                    input = sc.nextLine();
                     input = input.toLowerCase();
                     if(input.contains("y")){//yes
+                        player.putInInven(drop);
+                        while(!player.checkWeight()){
+                            System.out.println("You are carrying too much. You will have to drop items.");
+                            inven();
+                            input = sc.nextLine();
+                            input = input.toLowerCase().trim();
+                            if (input.contains("drop")||input.startsWith("d")) {
+                                input=input.substring(input.indexOf(" ")+1);
+                                int g=0;
+                                if(isNum(input)){
+                                    g=Integer.parseInt(input);
+                                    Item dropped=player.dropItem(g);
+                                    if(dropped==null){
+                                        System.out.println("There was nothing to drop.");
+                                    }else {
+                                        System.out.println(player.getName() + " dropped the " + dropped.getName() + ".");
+                                    }
+                                }else{
+                                    System.out.println("Please input an item number.");
+                                }
 
+                            }else{
+                                System.out.println("Nothing can be done till you are unencumbered.");
+                            }
+                        }
                     }else{//no
 
                     }
@@ -82,7 +115,7 @@ public class Run {
         do {
             System.out.print(player.toString() + "\n" +dun.getRoom(coor[0],coor[1],coor[2]).getDescription()+"\n"+ str + "\n>> ");
             String input = sc.nextLine();
-            input = input.toLowerCase();
+            input = input.toLowerCase().trim();
             if (input.equals("forward") || input.equals("frwd") || input.contains("for") || input.equals("f")) {
                 if(str.contains("Forward")){
                     player.move(Player.FORWARD);
@@ -100,16 +133,52 @@ public class Run {
                     System.out.println("\fPlease input a valid Command (type help for options).");
                 }
 
-            }else if (input.equals("help") || input.equals("hlp") || input.contains("he") || input.equals("h")) {
+            }else if (input.contains("help") || input.equals("hlp") || input.contains("he") || input.equals("h")) {
                 help();
 
-            } else if (input.equals("inventory") || input.equals("inv") || input.contains("inven") || input.equals("i")) {
+            } else if (input.contains("inventory") || input.equals("inv") || input.contains("inven") || input.equals("i")) {
                 inven();
 
-            } else if (input.equals("quit") || input.equals("qt") || input.contains("qu") || input.equals("q")) {
+            } else if (input.contains("quit") || input.equals("qt") || input.contains("qu") || input.equals("q")) {
                 quit();
 
-            } else if (input.equals("left") || input.equals("lft") || input.contains("le") || input.equals("l")) {
+            } else if (input.contains("talk") || input.equals("tk") || input.contains("tlk") || input.equals("t")) {
+                //todo talking
+
+            }else if (input.contains("use")||input.startsWith("u")) {
+                //todo using items
+
+            }else if (input.contains("equip")||input.startsWith("e")) {
+                input=input.substring(input.indexOf(" ")+1);
+                int g=0;
+                if(isNum(input)){
+                    g=Integer.parseInt(input);
+                    try{
+                        player.equip(player.getInven().get(g));
+                        System.out.println(player.getName()+" equipped the "+player.getInven().get(g).getName()+".");
+                    }catch(CannotEquipException cee){
+                        System.out.println(cee.getMessage());
+                    }
+                }else{
+                    System.out.println("Please input an item number.");
+                }
+
+            }else if (input.contains("drop")||input.startsWith("d")) {
+                input=input.substring(input.indexOf(" ")+1);
+                int g=0;
+                if(isNum(input)){
+                    g=Integer.parseInt(input);
+                    Item dropped=player.dropItem(g);
+                    if(dropped==null){
+                        System.out.println("There was nothing to drop.");
+                    }else {
+                        System.out.println(player.getName() + " dropped the " + dropped.getName() + ".");
+                    }
+                }else{
+                    System.out.println("Please input an item number.");
+                }
+
+            }else if (input.equals("left") || input.equals("lft") || input.contains("le") || input.equals("l")) {
                 if(str.contains("Left")){
                     player.move(Player.LEFT);
                     player.turnLeft();
@@ -138,19 +207,24 @@ public class Run {
         System.out.println("\fCommand List:\nhelp (h) - displays command list\n" +
                 "forward (f) - moves forward if available\nback (b) - moves back if available\n" +
                 "left (l) - moves left if available\nright (r) - moves right if available\n" +
-                "inven (i) - displays player inventory\nequip (e) - equips named item from inventory\n"+
+                "inven (i) - displays player inventory\nequip (e) - equips named item (by number) from inventory\n"+
                 "use (u) - uses named item in room or inventory (ie stairs, chests, potions)\n" +
-                "talk (t) - speaks to an NPC of Merchant\nquit (q) - quits the game\nsave (s) - saves game to named file\n" +
+                "drop (d) - drops named item (by number) in inventory\n" +
+                "talk (t) - speaks to an NPC or Merchant\nquit (q) - quits the game\nsave (s) - saves game to named file\n" +
                 "load -loads an available save file");
     }
     public static void inven(){
         if(player.getInven().size()<=0){
             System.out.println(player.getName()+"'s Inventory is empty.");
         }else {
-            System.out.println("name\tweight\tworth");
+            System.out.println("========"+player.getName()+"\'s Inventory=======\nWeight:\t+"+player.getLoad()+"\\"+player.getMaxWeight());//"name\tweight\tworth");
             int i = 0;
             for (Item itm : player.getInven()) {
-                System.out.println(i + ") " + itm.toString());
+                System.out.print(i + ") " + itm.toString());
+                if(player.isEquipped(itm)){
+                    System.out.print(" E");
+                }
+                System.out.print("\n");
                 i++;
             }
         }
@@ -168,17 +242,16 @@ public class Run {
         }
     }
 
-    public static void save(){
-        String filePath="";
+    public static void save(String path){//TODO
         try {
-            PrintWriter out = new PrintWriter(new File(filePath));
+            PrintWriter out = new PrintWriter(new File(path));
 
 
         }catch(FileNotFoundException fnfe){
 
         }
     }
-    public static void load(){
+    public static void load(String path){//TODO
 
     }
 
@@ -245,21 +318,10 @@ public class Run {
             if(in.equals("back")||in.equals("b")||in.equals("bk")||in.indexOf("-1")>=0){
                 again=true;
             }else{
-                String n="0123456789";
-                    boolean isNum=true;
-                    for(int g=0;i<in.length();g++){
-                        if(n.contains(in.substring(g,g+1))){
-
-                        }else{
-                            isNum= false;
-                        }
-                    }
-                    int g=0;
-                    if(isNum){
-                        g=Integer.parseInt(in);
-                    }
-
-
+                int g=0;
+                if(isNum(in)){
+                    g=Integer.parseInt(in);
+                }
 
                 int dam=p.getSpellList().get(g).cast();
                 p.loseRemMana(p.getSpellList().get(g).getCost());
@@ -287,6 +349,19 @@ public class Run {
         }while(again);
 
 
+    }
+
+    public static boolean isNum(String s){
+        String n="0123456789";
+        boolean isn=true;
+        for(int g=0;g<s.length();g++){
+            if(n.contains(s.substring(g,g+1))){
+
+            }else{
+                isn= false;
+            }
+        }
+        return isn;
     }
 
     public static void enemyTurn(Player p, Enemy e){

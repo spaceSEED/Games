@@ -8,6 +8,8 @@ public class Character {
     protected boolean alive=true;
     protected String name;
     int level=1;
+    int maxWeight=0;
+    int load=0;
     int strength,agility,charisma,intelligence,defense,endurance,wisdom, dexterity;
     double health,hp;
     double mana,remMana;
@@ -24,7 +26,7 @@ public class Character {
         this.defense=0;this.endurance=10;
         this.wisdom=10;this.dexterity=10;
         health=100;hp=health;
-
+        maxWeight=(strength/2)*(dexterity+agility);
     }
 
     public Character(String name){
@@ -34,7 +36,7 @@ public class Character {
         this.defense=0;this.endurance=10;
         this.wisdom=10;this.dexterity=10;
         health=100;hp=health;
-
+        maxWeight=(strength/2)*(dexterity+agility);
     }
 
     public void incXP(double xp){
@@ -69,6 +71,9 @@ public class Character {
     public int getEndurance(){return endurance;}
     public int getWisdom(){return wisdom;}
     public int getDexterity(){return dexterity;}
+
+    public int getMaxWeight(){return maxWeight;}
+    public int getLoad() { return load; }
 
     public double getHP(){
         return hp;
@@ -114,6 +119,10 @@ public class Character {
 
         }
         return null;
+    }
+
+    public boolean isEquipped(Item a){
+        return equipped.containsValue((Equipable)a);
     }
 
 
@@ -169,7 +178,7 @@ public class Character {
                     inventory.add((Item) equipped.get("HandR"));
                 }
                 equipped.put("HandR", e);
-            }else if (e.getType().equals("Bow_2Hand")) {
+            }else if (e.getType().equals("Bow")) {
                 if (equipped.containsKey("HandR")) {
                     inventory.add((Item) equipped.get("HandR"));
                     if (equipped.containsKey("HandL")) {
@@ -187,6 +196,27 @@ public class Character {
 
     public String toString(){
         return "\t"+getName()+"\nHealth: "+getHP()+"\tMana: "+getMana();
+    }
+
+    public void putInInven(Item it){
+        inventory.add(it);
+        load+=it.getWeight();
+
+    }
+
+    public Item dropItem(int i){
+        Item toDrop=inventory.remove(i);
+        if(isEquipped(toDrop)){
+            unequip(toDrop);
+        }
+        return toDrop;
+    }
+
+    public boolean checkWeight(){
+        if(load<=maxWeight){
+            return true;
+        }
+        return false;
     }
     public ArrayList<Item> getInven(){
         return inventory;
