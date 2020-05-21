@@ -32,7 +32,7 @@ public class Run {
             display();
             if(stepsTillBattle<=0){
                 stepsTillBattle=ran.nextInt(10)+1;
-                Enemy e=new Enemy();
+                Enemy e=new Enemy(player.getLevel());
                 if(!battle(player,e)){
                     System.out.println("=====GAME OVER=====\n"+player.getName()+" died in battle.");
                     break;
@@ -277,7 +277,7 @@ public class Run {
                     player=new Player(coor,nm,xp,para[0],para[1],para[2],para[3],para[4],para[5],para[6],para[7],para[8],hm[0],hm[1],hm[2],hm[3]);
                 }else{
                     while(0<=cur.indexOf(",")){
-                        Item nu=null;//todo add items in inventory
+                        Item nu=null;
                         String name=cur.substring(0,cur.indexOf("\t"))+" ";
                         cur=cur.substring(cur.indexOf("(")+1);
                         if(cur.startsWith("def:")){
@@ -315,7 +315,7 @@ public class Run {
                         }
                         cur=cur.substring(cur.indexOf(",")+1);
                     }
-                }
+                }//todo load dungeon once that is added to save
 
                 i++;
             }

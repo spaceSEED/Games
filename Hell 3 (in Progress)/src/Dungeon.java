@@ -28,14 +28,14 @@ public class Dungeon {
     }
 
 
-    public void generate(){
+    public void generate(){//Todo populate with items/npcs/chests +stairs
         Random ran=new Random();
-        Map<Integer,String> needed=new HashMap<Integer, String>();
-        needed.put(0,"d_stairs");
-        needed.put(0,"u_stairs");
-        needed.put(0,"chest");
-        needed.put(0,"merchant");
-        needed.put(0,"npc");
+        Map<String,Integer> needed=new HashMap<String,Integer>();
+        needed.put("d_stairs",0);
+        needed.put("u_stairs",0);
+        needed.put("chest",0);
+        needed.put("merchant",0);
+        needed.put("npc",0);
 
         for(int z=0;z<floors;z++){
 
@@ -310,7 +310,7 @@ public class Dungeon {
             }else{
                 type="Shield";
             }
-            toReturn=new Armor(itemNameGen(type,cls,rarity),type,(ran.nextInt(30)+3)*rarity,ran.nextInt(20)+3);
+            //toReturn=new Armor(itemNameGen(type,cls,rarity),type,(ran.nextInt(30)+3)*rarity,ran.nextInt(20)+3);
         }else if(r<60){
             cls="weapon";
             r=ran.nextInt(100);
