@@ -14,15 +14,20 @@ public class Player extends Character {
     ArrayList<Spell> spellList = new ArrayList<>();
     int[] coordinates=new int[3];
 
-            public Player(){
-                coordinates[0]=0;
-                coordinates[1]=0;
-                coordinates[2]=0;
-            }
-            public Player(String name){
-                this();
-                setName(name);
-            }
+    public Player() {
+        coordinates[0] = 0;
+        coordinates[1] = 0;
+        coordinates[2] = 0;
+    }public Player(String name){
+        //this();
+        setName(name);
+    }
+    public Player(int[] pos,String name,int level,int xp,int agility,int strength,int charisma, int intelligence, int defense, int endurance, int wisdom, int dexterity, double health, double hp, double mana, double remMana){
+        super(name,level,xp,agility,strength,charisma,intelligence,defense,endurance,wisdom,dexterity,health,hp, mana,remMana);
+        coordinates[0]=pos[0];
+        coordinates[1]=pos[1];
+        coordinates[2]=pos[2];
+    }
 
 
     public ArrayList<Spell> getSpellList(){
@@ -116,6 +121,21 @@ public class Player extends Character {
 
     public int getFacing(){
         return facing;
+    }
+
+    public String saveData(){//todo save spells
+                String out="name:"+name+"\nposition:"+position[0]+","+position[1]+","+position[2]+"\nlevel:"+level+
+                        "\nagility:"+agility+ "\nstrength:"+strength+ "\ncharisma:"+charisma+
+                        "\nintelligence:"+intelligence+ "\ndefense:"+defense+ "\nendurance:"+endurance+
+                        "\nwisdom:"+wisdom+ "\ndexterity:"+dexterity+ "\nhealth:"+health+ "\nhp:"+hp+
+                        "\nmana:"+mana+ "\nremMana:"+remMana+ "\nxp:"+experience+ "\ninventory:";
+                for(Item i : inventory){
+                    out+=i.toString();
+                    if(isEquipped(i)){out+="E";}
+                    out+=",";
+                }
+                out+="\n";
+                return out;
     }
 
 

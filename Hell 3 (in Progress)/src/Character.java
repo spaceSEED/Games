@@ -39,6 +39,18 @@ public class Character {
         maxWeight=(strength/2)*(dexterity+agility);
     }
 
+    public Character(String name,int level,int xp,int agility,int strength,int charisma, int intelligence, int defense, int endurance, int wisdom, int dexterity, double health, double hp, double mana, double remMana){
+        this.name=name;this.level=level;
+        this.agility=agility;this.strength=strength;
+        this.charisma=charisma;this.intelligence=intelligence;
+        this.defense=defense;this.endurance=endurance;
+        this.wisdom=wisdom;this.dexterity=dexterity;
+        this.health=health;this.hp=hp;
+        this.mana=mana;this.remMana=remMana;
+        maxWeight=(strength/2)*(dexterity+agility);
+        experience=xp;
+    }
+
     public void incXP(double xp){
         System.out.println(name+" gained "+xp+" xp.");
         experience+=xp;

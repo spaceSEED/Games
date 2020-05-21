@@ -25,7 +25,7 @@ public class Run {
             String name = sc.nextLine();
             player = new Player(name);
         }
-        
+
         Random ran = new Random();
         int stepsTillBattle=ran.nextInt(10)+1;
         while(true){
@@ -242,17 +242,61 @@ public class Run {
         }
     }
 
-    public static void save(String path){//TODO
+    public static void save(String path){
         try {
             PrintWriter out = new PrintWriter(new File(path));
-
-
+            out.print(player.saveData());//TODO save dungeon config
         }catch(FileNotFoundException fnfe){
-
+            System.out.println("Save Failed. File Not Found.");
         }
     }
     public static void load(String path){//TODO
+        try {
+            Scanner load = new Scanner(new FileInputStream(path));
+            int para[]=new int[9];
+            double hm[]=new double[4];
+            int coor[]=new int[3];
+            int xp=0;
+            String nm="";
+            int i=0;
+            while(load.hasNext()){
+                String cur=load.nextLine();
+                cur=cur.substring(cur.indexOf(":")+1);
+                if(i==0){
+                    nm=cur;
+                }else if(i==1){
+                    coor[0]=Integer.parseInt(cur.substring(0,cur.indexOf(",")));
+                    coor[1]=Integer.parseInt(cur.substring(cur.indexOf(",")+1,cur.lastIndexOf(",")));
+                    coor[2]=Integer.parseInt(cur.substring(cur.lastIndexOf(",")+1));
+                }else if(i>1&&i<11){
+                    para[i-2]=Integer.parseInt(cur);
+                }else if(i>10&&i<15){
+                    hm[i-11]=Double.parseDouble(cur);
+                }else if(i==15){
+                    xp=Integer.parseInt(cur);
+                    player=new Player(coor,nm,xp,para[0],para[1],para[2],para[3],para[4],para[5],para[6],para[7],para[8],hm[0],hm[1],hm[2],hm[3]);
+                }else{
+                    while(0<=cur.indexOf(",")){
+                        Item nu=null;//todo add items in inventory
 
+
+                        player.putInInven(nu);
+                        if(cur.substring(0,cur.indexOf(",")).endsWith("E")){
+                            try {
+                                player.equip(nu);
+                            }catch(CannotEquipException cee){
+                                System.out.println("Loading Error. Corrupt Save-Data.");
+                            }
+                        }
+                        cur=cur.substring(cur.indexOf(",")+1);
+                    }
+                }
+
+                i++;
+            }
+        }catch(FileNotFoundException fnfe){
+            System.out.println("Load Failed. File Not Found.");
+        }
     }
 
 
