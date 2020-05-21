@@ -278,8 +278,33 @@ public class Run {
                 }else{
                     while(0<=cur.indexOf(",")){
                         Item nu=null;//todo add items in inventory
+                        String name=cur.substring(0,cur.indexOf("\t"))+" ";
+                        cur=cur.substring(cur.indexOf("(")+1);
+                        if(cur.startsWith("def:")){
+                            int p[]=new int[3];
+                            p[0]=Integer.parseInt(cur.substring(cur.indexOf(" ")+1,cur.indexOf(";")));
+                            cur=cur.substring(cur.indexOf(" ",cur.indexOf(";"))+1);
+                            p[1]=Integer.parseInt(cur.substring(0,cur.indexOf("lbs")));
+                            cur=cur.substring(cur.indexOf(" ",cur.indexOf(";"))+1);
+                            p[2]=Integer.parseInt(cur.substring(0,cur.indexOf(" ")));
 
+                            nu=new Armor(name.trim(),name.substring(name.indexOf(" ")),p[0],p[1],p[2]);
+                        }else if(cur.startsWith("atk")){
+                            int p[]=new int[5];
+                            p[0]=Integer.parseInt(cur.substring(cur.indexOf(" ")+1,cur.indexOf(";")));
+                            cur=cur.substring(cur.indexOf(":",cur.indexOf(";"))+1);
+                            p[1]=Integer.parseInt(cur.substring(cur.indexOf(" ")+1,cur.indexOf(";")));
+                            cur=cur.substring(cur.indexOf(":",cur.indexOf(";"))+1);
+                            p[2]=Integer.parseInt(cur.substring(cur.indexOf(" ")+1,cur.indexOf(";")));
+                            cur=cur.substring(cur.indexOf(":",cur.indexOf(";"))+1);
+                            p[3]=Integer.parseInt(cur.substring(0,cur.indexOf("lbs")));
+                            cur=cur.substring(cur.indexOf(" ",cur.indexOf(";"))+1);
+                            p[4]=Integer.parseInt(cur.substring(0,cur.indexOf(" ")));
 
+                            nu=new Weapon(name.trim(),name.substring(name.indexOf(" ")),p[0],p[1],p[2],p[3],p[4]);
+                        }else{
+                            nu=new Item(name);
+                        }
                         player.putInInven(nu);
                         if(cur.substring(0,cur.indexOf(",")).endsWith("E")){
                             try {
