@@ -3,3 +3,6 @@
 *.iml
 package.bluej
 .idea/
+/bin/
+.classpath
+.project
