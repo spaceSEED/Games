@@ -18,8 +18,9 @@ public class Player extends Character {
         coordinates[0] = 0;
         coordinates[1] = 0;
         coordinates[2] = 0;
-    }public Player(String name){
-        //this();
+    }
+    public Player(String name){
+        this();
         setName(name);
     }
     public Player(int[] pos,String name,int level,int xp,int agility,int strength,int charisma, int intelligence, int defense, int endurance, int wisdom, int dexterity, double health, double hp, double mana, double remMana){

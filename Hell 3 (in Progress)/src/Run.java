@@ -113,7 +113,7 @@ public class Run {
         }
         System.out.print("\f");
         do {
-            System.out.print(player.toString() + "\n" +dun.getRoom(coor[0],coor[1],coor[2]).getDescription()+"\n"+ str + "\n>> ");
+            System.out.print(player.toString() + "\n" +dun.getRoom(coor[0],coor[1],coor[2]).getDescription(player.getFacing())+"\n"+ str + "\n>> ");
             String input = sc.nextLine();
             input = input.toLowerCase().trim();
             if (input.equals("forward") || input.equals("frwd") || input.contains("for") || input.equals("f")) {
@@ -196,7 +196,10 @@ public class Run {
                     System.out.println("\fPlease input a valid Command (type help for options).");
                 }
 
+            }else if(input.equals("top down") || input.equals("td") || input.contains("top") || input.equals("top view")) {
+            	System.out.println("\f"+dun.getRoom(coor[0],coor[1],coor[2]).getDescriptionTopDown(player.getFacing()));
             }else{
+            
                 System.out.println("\fPlease input a valid Command (type help for options).");
             }
         }while(true);

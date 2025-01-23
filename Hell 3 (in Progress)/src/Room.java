@@ -2,6 +2,8 @@
 
 import java.util.*;
 
+import hell.graphics.Rooms;
+
 /**
  * Created by Liam on 11/9/2016.
  */
@@ -19,25 +21,39 @@ public class Room {
     }
 
 
-    public String getDescription(){
-        String description="===================\n";
+    public String getDescriptionTopDown(int facing){
+    	
+    	String compass="N";
+    	if(facing==1)
+    		compass="E";
+    	else if(facing==2)
+    		compass="S";
+    	else if(facing==3)
+    		compass="W";
+		 
+  									    //facing=  0123 NESW
+    		int right=facing<3?facing+1:0;       //1230 
+    		int bottom=facing<2?facing+2:facing-2; //2301 
+    		int left=facing>0?facing-1:3;	     //3012 
+    	
+        String description="========="+compass+"=========\n";
         for(int y=0;y<6;y++){
             for(int x=0;x<18;x++){
                 if(x==8&&y>1&&y<4){
                     if(y==2){description+="o";}else if(y==3){description+="X";}
-                }else if(neswEdge[0]==WALL&&x>4&&x<12&&(y==1)){
+                }else if(neswEdge[facing]==WALL&&x>4&&x<12&&(y==1)){
                     description+="=";
-                }else if(neswEdge[2]==WALL&&x>4&&x<12&&(y==4)){
+                }else if(neswEdge[bottom]==WALL&&x>4&&x<12&&(y==4)){
                     description+="=";
-                }else if(neswEdge[2]==WALL&&x>4&&x==12&&(y==4)){
+                }else if(neswEdge[bottom]==WALL&&x>4&&x==12&&(y==4)){
                     description+=" ";
-                }else if(neswEdge[0]==WALL&&x>4&&x==12&&(y==1)){
+                }else if(neswEdge[facing]==WALL&&x>4&&x==12&&(y==1)){
                     description+=" ";
-                }else if(neswEdge[3]==WALL&&y>1&&y<4&&(x==5)){
+                }else if(neswEdge[left]==WALL&&y>1&&y<4&&(x==5)){
                     description+="|";
-                }else if(neswEdge[1]==WALL&&y>1&&y<4&&(x==9)){
+                }else if(neswEdge[right]==WALL&&y>1&&y<4&&(x==9)){
                     description+="   | ++++";
-                }else if(neswEdge[1]==WALL&&y>1&&y<4&&(x>9)){
+                }else if(neswEdge[right]==WALL&&y>1&&y<4&&(x>9)){
 
                 }else if(y>0&&y<5&&x>3&&x<12){
                     description+=" ";
@@ -46,6 +62,48 @@ public class Room {
                 }
             }
             description+="\n";
+        }
+
+        description+="===================";
+        return description;
+    }
+    
+ public String getDescription(int facing){
+    	
+    	String compass="N";
+    	if(facing==1)
+    		compass="E";
+    	else if(facing==2)
+    		compass="S";
+    	else if(facing==3)
+    		compass="W";					 
+    						  		//facing=  0123 NESW
+    	int right=facing<3?facing+1:0;       //1230 
+    	int back=facing<2?facing+2:facing-2; //2301 
+    	int left=facing>0?facing-1:3;	     //3012 
+    	
+        String description="========="+compass+"=========\n";
+        
+        if(isOpening(facing)) {
+        	if(isOpening(left)&&isOpening(right)) {
+        		description+=Rooms.FORWARD_LEFT_RIGHT_HALL;
+        	}else if(isOpening(left)) {
+        		description+=Rooms.FORWARD_LEFT_HALL;
+        	}else if(isOpening(right)) {
+        		description+=Rooms.FORWARD_RIGHT_HALL;
+        	}else {
+        		description+=Rooms.FORWARD_HALL;
+        	}
+        }else {
+        	if(isOpening(left)&&isOpening(right)) {
+        		description+=Rooms.LEFT_RIGHT_HALL;
+        	}else if(isOpening(left)) {
+        		description+=Rooms.LEFT_HALL;
+        	}else if(isOpening(right)) {
+        		description+=Rooms.RIGHT_HALL;
+        	}else {
+        		description+=Rooms.DEAD_END;
+        	}
         }
 
         description+="===================";
