@@ -9,9 +9,11 @@ import hell.utilities.dialog.*;
  * Created by Liam on 11/6/2016.
  */
 public class NPC extends Character {
+	
     DialogTree conversation=null;
+    String graphic="";
 
-    public  NPC(){
+    public NPC(){
 
     }
 
@@ -19,6 +21,14 @@ public class NPC extends Character {
         if(talkative){
             conversation=new DialogTree();
         }
+    }
+    
+    public String getGraphic() {
+    	return graphic;
+    }
+    
+    public String toString(){
+        return graphic+"\n\t"+getName()+"\nHealth: "+getHP()+"\tMana: "+getMana();
     }
 
     public void speak(){

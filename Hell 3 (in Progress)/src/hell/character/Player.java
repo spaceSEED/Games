@@ -22,7 +22,7 @@ public class Player extends Character {
         coordinates[1] = 0;
         coordinates[2] = 0;
         Weapon starter_sword=new Weapon("Dull Sword","Sword",5,1,1,6,1);
-        inventory.add(starter_sword);
+        putInInven(starter_sword);
         try {
 			equip(starter_sword);
 		} catch (CannotEquipException e) {
@@ -46,13 +46,23 @@ public class Player extends Character {
         return spellList;
     }
     
+    /**
+     * Moves the player up a floor (back to an earlier level)
+     */
     public void moveUp() {
     	coordinates[0]=coordinates[0]-1;
     }
+    /**
+     * Moves the player down a floor (down to a higher level)
+     */
     public void moveDown() {
     	coordinates[0]=coordinates[0]+1;
     }
 
+    /**
+     * Moves the player through the dungeon in the given direction (based on player orientation)
+     * @param dir
+     */
     public void move(int dir){
         int x=coordinates[2];
         int y=coordinates[1];
@@ -100,6 +110,10 @@ public class Player extends Character {
         coordinates[1]=y;
         coordinates[2]=x;
     }
+    
+    /**
+     * Rotates the player 180`
+     */
     public void turnBack(){
         if(facing==GameValues.FORWARD){
             facing=GameValues.BACKWARD;
@@ -111,6 +125,10 @@ public class Player extends Character {
             facing=GameValues.FORWARD;
         }
     }
+    
+    /**
+     * Rotates the player left 90`
+     */
     public void turnLeft(){
         if(facing==GameValues.FORWARD){
             facing=GameValues.LEFT;
@@ -122,6 +140,10 @@ public class Player extends Character {
             facing=GameValues.RIGHT;
         }
     }
+    
+    /**
+     * Rotates the player right 90`
+     */
     public void turnRight(){
         if(facing==GameValues.FORWARD){
             facing=GameValues.RIGHT;
@@ -134,10 +156,18 @@ public class Player extends Character {
         }
     }
 
+    /**
+     * Get current dungeon coordinates
+     * @return (z,y,x)
+     */
     public int[] getCoordinates(){
         return coordinates;
     }
 
+    /**
+     * Gets the player orientation
+     * @return GameValues.FORWARD, GameValues.LEFT, GameValues.RIGHT, GameValues.BACKWARD
+     */
     public int getFacing(){
         return facing;
     }
@@ -157,6 +187,10 @@ public class Player extends Character {
                 return out;
     }
     
+    /**
+     * Gets a string representation of the player's inventory
+     * @return
+     */
     public String invenDisplay(){
         if(inventory.size()<=0){
             return name+"'s Inventory is empty.";

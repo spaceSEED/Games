@@ -1,6 +1,8 @@
 package hell.character;
 import java.util.Random;
 
+import hell.graphics.Enemies;
+
 /**
  * Created by Liam on 11/6/2016.
  */
@@ -29,6 +31,7 @@ public class Enemy extends NPC {
         else if(level>45){defense=level+level/2;}
         else if(level>60){defense=2*level;}
         name="demon";
+        graphic=Enemies.DEMON;
     }
 
 

@@ -121,6 +121,10 @@ public class Character {
     public void incMana(double h){
         mana+=h;
     }
+    /**
+     * Returns current remaining Mana
+     * @param n
+     */
     public void gainRemMana(double n){ remMana+=n; if(remMana>mana){remMana=mana;}}
 
     public String getName(){
@@ -134,6 +138,11 @@ public class Character {
         return alive;
     }
 
+    /**
+     * Get what item is equipped to the given location
+     * @param p - "Head","Feet","Hands","Chest","HandL","HandR"
+     * @return
+     */
     public Item getEquipped(String p){
         if(equipped.containsKey(p)){
             return (Item)equipped.get(p);
@@ -142,26 +151,34 @@ public class Character {
         return null;
     }
 
+    /**
+     * Returns if the given item is currently equipped
+     * @param a 
+     * @return
+     */
     public boolean isEquipped(Item a){
         return a.isEquipable()?((Equipable)a).getEquipped():false;
     }
 
 
+    /**
+     * Unequip an item.
+     * @param a
+     */
     public void unequip(Item a){
-        if(equipped.containsValue((Equipable)a)){
-            Set s= equipped.keySet();
-            Iterator it = s.iterator();
-            String key;
-            while(it.hasNext()){
-                key=(String)it.next();
-                if(equipped.get(key).equals((Equipable)a)){
-                    inventory.add((Item) equipped.remove(key));
-                    break;
-                }
-            }
+        if(isEquipped(a)){
+            Equipable e = (Equipable) a;
+        	String key=e.getType();
+        	e = equipped.remove(key);
+        	e.setEquipped(false);
         }
     }
 
+    /**
+     * Equip and item (and unequip current equipment in the needed slots)
+     * @param a
+     * @throws CannotEquipException
+     */
     public void equip(Item a) throws CannotEquipException{
         if(a.isEquipable()) {
             Equipable e = (Equipable) a;
@@ -214,6 +231,10 @@ public class Character {
         }
     }
     
+    /**
+     * Get the attack strength of equipped items
+     * @return
+     */
     public int getEquippedStrength() {
     	int str=0;
     	Equipable itm=equipped.get("HandR");
@@ -227,30 +248,51 @@ public class Character {
 
 
 
+    /**
+     * Return a display of the character's Name, Health and Mana
+     */
     public String toString(){
         return "\t"+getName()+"\nHealth: "+getHP()+"\tMana: "+getMana();
     }
 
+    /**
+     * Add an item to the inventory (including weight)
+     * @param it
+     */
     public void putInInven(Item it){
         inventory.add(it);
         load+=it.getWeight();
 
     }
 
+    /**
+     * Remove an item from the inventory (including weight)
+     * @param i
+     * @return
+     */
     public Item dropItem(int i){
         Item toDrop=inventory.remove(i);
         if(isEquipped(toDrop)){
             unequip(toDrop);
         }
+        load-=toDrop.getWeight();
         return toDrop;
     }
 
+    /**
+     * Check if current inventory load exceeds the max carry weight
+     * @return
+     */
     public boolean checkWeight(){
         if(load<=maxWeight){
             return true;
         }
         return false;
     }
+    /**
+     * Get the inventory list
+     * @return
+     */
     public ArrayList<Item> getInven(){
         return inventory;
     }

@@ -23,15 +23,25 @@ public class Dungeon {
         }
         generate();
     }
+    
     public Dungeon(Room[][][] load){
         dungeonMap=load;
     }
 
+    /**
+     * Get a Room of the Dungeon
+     * @param z
+     * @param y
+     * @param x
+     * @return
+     */
     public Room getRoom(int z,int y,int x){
         return dungeonMap[z][y][x];
     }
 
-
+    /**
+     * Create a random dungeon configuration
+     */
     public void generate(){//Todo populate with items/npcs/chests +stairs
         Random ran=new Random();
         Map<String,Integer> needed=new HashMap<String,Integer>();
@@ -197,6 +207,12 @@ public class Dungeon {
         }
     }
 
+    /**
+     * Get Dungeon coordinates (y,x) given a floor and room
+     * @param floor
+     * @param r
+     * @return
+     */
     public int[] get(int floor,Room r){
         for(int i=0;i<dungeonMap[0].length;i++){
             for(int j=0;j<dungeonMap[0][0].length;j++){
@@ -209,6 +225,11 @@ public class Dungeon {
         return null;
     }
 
+    /**
+     * Create a valid path through a floor of the dungeon. (Ensure that the game is beatable.)
+     * @param floor
+     * @param path
+     */
     public void fillPath(int floor, List<Room> path){
         Random ran = new Random();
         for(int i=0;i<path.size()-1;i++){
@@ -261,6 +282,14 @@ public class Dungeon {
         }
     }
 
+    /**
+     * Given a room's coordinates get each of the rooms adjacent to it.
+     *        [0]North [1]South [2]West [3]East
+     * @param z
+     * @param y
+     * @param x
+     * @return
+     */
     public Room[] getAdjacent(int z, int y, int x){
         Room[] near = new Room[4];
         if(y-1<0){//north
@@ -289,7 +318,13 @@ public class Dungeon {
     }
 
     /**
-     * Generates the path from stair a to b
+     * Generates the path from stair (a,b) to (y,x)
+     * @param floor
+     * @param a
+     * @param b
+     * @param y
+     * @param x
+     * @return
      */
     public List<Room> pathFind(int floor,int a, int b, int y, int x){
         Graph<Room,String> pf;
@@ -319,7 +354,11 @@ public class Dungeon {
 
     }
 
-
+    /**
+     * Randomly creates an Item given a rarity value.
+     * @param rarity
+     * @return
+     */
     public Item genItem(int rarity){
         Item toReturn=null;
         Random ran=new Random();
@@ -370,6 +409,14 @@ public class Dungeon {
         return toReturn;
     }
 
+    /**
+     * Randomly creates an item name.
+     * 
+     * @param detail1
+     * @param detail2
+     * @param rarity
+     * @return
+     */
     public String itemNameGen(String detail1,String detail2, int rarity){
         if(detail1.contains("_2Hand")){
             if(detail1.contains("Bow")){
@@ -417,6 +464,15 @@ public class Dungeon {
         return str;
     }
     
+    /**
+     * Returns a top down, north-facing map of the current dungeon floor.
+     * 
+     * @param floor
+     * @param py - player y
+     * @param px - player x
+     * @param facing - player orientation
+     * @return
+     */
     public String getMap(int floor, int py, int px, int facing) {
     	String map="";
     	for(int y=0;y<dungeonMap[0].length;y++){

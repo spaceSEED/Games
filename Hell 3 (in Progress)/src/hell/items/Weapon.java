@@ -28,9 +28,4 @@ public class Weapon extends Equipable{
     public int getSpeed() {
     	return speed;
     }
-
-    @Override
-    public boolean isEquipable() {
-        return true;
-    }
 }

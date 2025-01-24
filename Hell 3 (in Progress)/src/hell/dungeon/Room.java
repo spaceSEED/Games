@@ -122,7 +122,7 @@ public class Room {
     public void build(){
         Random ran = new Random();
         for(int r=0;r<neswEdge.length;r++){
-            neswEdge[r]=ran.nextInt(3);
+            neswEdge[r]=ran.nextInt(4);
         }
     }
     
