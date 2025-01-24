@@ -67,4 +67,30 @@ public class Rooms {
 			+ "    |+	       +|\r\n"
 			+ "    /           \\\r\n";
 	
+	public final static String CHEST=
+			              "    \\           /\r\n"
+						+ "     \\ _______ /\r\n"
+						+ "      |       |\r\n"
+						+ "      | _____ |\r\n"
+						+ "      |/  !  \\|\r\n"
+						+ "     / \\_____/ \\\r\n"
+						+ "    /           \\\r\n";
+	
+	public final static String STAIRS_UP=
+			                "    \\           /\r\n"
+			              + "     \\ _______ /\r\n"
+			              + "      |++===++|\r\n"
+			              + "      |+=====+|\r\n"
+			              + "      |=======|\r\n"
+			              + "     /	       \\\r\n"
+			              + "    /           \\";
+	public final static String STAIRS_DOWN=
+			  "   \\             /\r\n"
+			+ "    \\           /\r\n"
+			+ "     \\ _______ /\r\n"
+			+ "      |+++++++|\r\n"
+			+ "      |+_-_-_+|\r\n"
+			+ "      |=======|\r\n"
+			+ "    _/	       \\_";
+	
 }
