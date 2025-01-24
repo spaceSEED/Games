@@ -78,8 +78,8 @@ public class Item {
                 type="Sword";
             }
             String nm=type;//+" of "+dictionary[ran.nextInt(dictionary.length)];
-            int atk=ran.nextInt(player.getLevel()*5)+1;
-            int wei=ran.nextInt(100)+1;
+            int atk=ran.nextInt(player.getLevel()*5)+2;
+            int wei=ran.nextInt(35)+1;
             int spd=wei-ran.nextInt(wei-1);
             int r=ran.nextInt(100)+1;//Do I even use this stat?
             int c=atk+ran.nextInt(100)/wei;

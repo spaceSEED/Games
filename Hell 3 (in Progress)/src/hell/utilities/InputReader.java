@@ -26,7 +26,7 @@ public class InputReader {
         input = input.toLowerCase().trim();
         if (input.equals("forward") || input.equals("frwd") || input.contains("for") || input.equals("f")) {
             if(prompts.contains("Forward")){
-                player.move(Player.FORWARD);
+                player.move(GameValues.FORWARD);
                 break;
             }else{
                 System.out.println("\fPlease input a valid Command (type help for options).");
@@ -34,14 +34,48 @@ public class InputReader {
 
         } else if (input.equals("right") || input.equals("rt") || input.contains("ri") || input.equals("r")) {
             if(prompts.contains("Right")){
-                player.move(Player.RIGHT);
+                player.move(GameValues.RIGHT);
                 player.turnRight();
                 break;
             }else{
                 System.out.println("\fPlease input a valid Command (type help for options).");
             }
 
-        }else if (input.contains("help") || input.equals("hlp") || input.contains("he") || input.equals("h")) {
+        } else if (input.equals("left") || input.equals("lft") || input.contains("le") || input.equals("l")) {
+            if(prompts.contains("Left")){
+                player.move(GameValues.LEFT);
+                player.turnLeft();
+                break;
+            }else{
+                System.out.println("\fPlease input a valid Command (type help for options).");
+            }
+
+        } else if (input.equals("back") || input.equals("bk") || input.contains("ba") || input.equals("b")) {
+            if(prompts.contains("Back")){
+                player.move(GameValues.BACKWARD);
+                player.turnBack();
+                break;
+            }else{
+                System.out.println("\fPlease input a valid Command (type help for options).");
+            }
+
+        } else if (input.equals("up")) {
+            if(prompts.contains("Up")){
+                player.moveUp();
+                break;
+            }else{
+                System.out.println("\fPlease input a valid Command (type help for options).");
+            }
+
+        } else if (input.equals("down")) {
+            if(prompts.contains("Down")){
+                player.moveDown();
+                break;
+            }else{
+                System.out.println("\fPlease input a valid Command (type help for options).");
+            }
+
+        } else if (input.contains("help") || input.equals("hlp") || input.contains("he") || input.equals("h")) {
         	GameOp.help();
 
         } else if (input.contains("inventory") || input.equals("inv") || input.contains("inven") || input.equals("i")) {
@@ -53,10 +87,10 @@ public class InputReader {
         } else if (input.contains("talk") || input.equals("tk") || input.contains("tlk") || input.equals("t")) {
             //todo talking
 
-        }else if (input.contains("use")||input.startsWith("u")) {
+        } else if (input.contains("use")||input.startsWith("u")) {
             //todo using items
 
-        }else if (input.contains("equip")||input.startsWith("e")) {
+        } else if (input.contains("equip")||input.startsWith("e")) {
             input=input.substring(input.indexOf(" ")+1);
             int g=0;
             if(Utilities.isNum(input)){
@@ -84,24 +118,6 @@ public class InputReader {
                 }
             }else{
                 System.out.println("Please input an item number.");
-            }
-
-        }else if (input.equals("left") || input.equals("lft") || input.contains("le") || input.equals("l")) {
-            if(prompts.contains("Left")){
-                player.move(Player.LEFT);
-                player.turnLeft();
-                break;
-            }else{
-                System.out.println("\fPlease input a valid Command (type help for options).");
-            }
-
-        } else if (input.equals("back") || input.equals("bk") || input.contains("ba") || input.equals("b")) {
-            if(prompts.contains("Back")){
-                player.move(Player.BACKWARD);
-                player.turnBack();
-                break;
-            }else{
-                System.out.println("\fPlease input a valid Command (type help for options).");
             }
 
         }else if(input.equals("top down") || input.equals("td") || input.equals("top") || input.equals("top view")) {

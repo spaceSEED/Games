@@ -1,7 +1,6 @@
 package hell.items;
 
-public class Weapon extends Item implements Equipable{
-    String type="";
+public class Weapon extends Equipable{
     int attack=0;
     int range=0;
     int speed=0;
@@ -17,10 +16,18 @@ public class Weapon extends Item implements Equipable{
     public String toString(){
         return name+"\t(atk: "+attack+"; range: "+range+"; spd: "+speed+"; "+weight+"lbs; "+worth+" gold)";
     }
-
-    /*public String getType(){
-        return type;
-    }*/
+    
+    public int getAttack() {
+    	return attack;
+    }
+    
+    public int getRange() {
+    	return range;
+    }
+    
+    public int getSpeed() {
+    	return speed;
+    }
 
     @Override
     public boolean isEquipable() {

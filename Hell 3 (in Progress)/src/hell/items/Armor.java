@@ -4,7 +4,7 @@ import java.util.Random;
 /**
  * Created by Liam on 11/8/2016.
  */
-public class Armor extends Item implements Equipable{
+public class Armor extends Equipable{
     String type="";
     int defense=0;
 

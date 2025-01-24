@@ -10,13 +10,15 @@ public class Enemy extends NPC {
     int level=1;
     double xp=0;
 
-    public Enemy(int p_level){
+    public Enemy(int p_level, int floor){
         Random ran = new Random();
         int t=ran.nextInt(10);
-        if(t>6){
-            level=p_level+t;
+        if(t>8){
+            level=p_level+t-floor;
         }else{
             level=p_level-t;
+            if(level<1)
+            	level=1;
         }
         xp=level*7;
         agility+=level/3;

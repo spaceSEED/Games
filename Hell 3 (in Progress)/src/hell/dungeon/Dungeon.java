@@ -35,8 +35,8 @@ public class Dungeon {
     public void generate(){//Todo populate with items/npcs/chests +stairs
         Random ran=new Random();
         Map<String,Integer> needed=new HashMap<String,Integer>();
-        needed.put("d_stairs",0);
-        needed.put("u_stairs",0);
+        //needed.put("d_stairs",0);
+        //needed.put("u_stairs",0);
         needed.put("chest",0);
         needed.put("merchant",0);
         needed.put("npc",0);

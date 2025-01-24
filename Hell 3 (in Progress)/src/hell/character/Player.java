@@ -3,17 +3,16 @@ package hell.character;
 
 import java.util.*;
 
+import hell.exceptions.CannotEquipException;
 import hell.items.Item;
 import hell.items.Spell;
+import hell.items.Weapon;
+import hell.utilities.GameValues;
 /**
  * Created by Liam on 11/6/2016.
  */
 public class Player extends Character {
-	public static final int FORWARD=0;//North
-	public static final int LEFT=3;//West
-    public static final int RIGHT=1;//East
-    public static final int BACKWARD=2;//South
-    int facing=FORWARD;
+    int facing=GameValues.FORWARD;
 
     ArrayList<Spell> spellList = new ArrayList<>();
     int[] coordinates=new int[3];
@@ -22,8 +21,16 @@ public class Player extends Character {
         coordinates[0] = 0;
         coordinates[1] = 0;
         coordinates[2] = 0;
+        Weapon starter_sword=new Weapon("Dull Sword","Sword",5,1,1,6,1);
+        inventory.add(starter_sword);
+        try {
+			equip(starter_sword);
+		} catch (CannotEquipException e) {
+			e.printStackTrace();
+		}
     }
     public Player(String name){
+    	this();
     	if(name!=null&&!"".equals(name))
     		setName(name);
     }
@@ -38,48 +45,55 @@ public class Player extends Character {
     public ArrayList<Spell> getSpellList(){
         return spellList;
     }
+    
+    public void moveUp() {
+    	coordinates[0]=coordinates[0]-1;
+    }
+    public void moveDown() {
+    	coordinates[0]=coordinates[0]+1;
+    }
 
     public void move(int dir){
         int x=coordinates[2];
         int y=coordinates[1];
-        if(facing==FORWARD){
-            if(dir==FORWARD){
+        if(facing==GameValues.FORWARD){
+            if(dir==GameValues.FORWARD){
                 y--;
-            }else if(dir==LEFT){
+            }else if(dir==GameValues.LEFT){
                 x--;
-            }else if(dir==RIGHT){
+            }else if(dir==GameValues.RIGHT){
                 x++;
-            }else if(dir==BACKWARD){
+            }else if(dir==GameValues.BACKWARD){
                 y++;
             }
-        }else if(facing==LEFT){
-            if(dir==FORWARD){
+        }else if(facing==GameValues.LEFT){
+            if(dir==GameValues.FORWARD){
                 x--;
-            }else if(dir==LEFT){
+            }else if(dir==GameValues.LEFT){
                 y++;
-            }else if(dir==RIGHT){
+            }else if(dir==GameValues.RIGHT){
                 y--;
-            }else if(dir==BACKWARD){
+            }else if(dir==GameValues.BACKWARD){
                 x++;
             }
-        }else if(facing==RIGHT){
-            if(dir==FORWARD){
+        }else if(facing==GameValues.RIGHT){
+            if(dir==GameValues.FORWARD){
                 x++;
-            }else if(dir==LEFT){
+            }else if(dir==GameValues.LEFT){
                 y--;
-            }else if(dir==RIGHT){
+            }else if(dir==GameValues.RIGHT){
                 y++;
-            }else if(dir==BACKWARD){
+            }else if(dir==GameValues.BACKWARD){
                 x--;
             }
-        }else if(facing==BACKWARD){
-            if(dir==FORWARD){
+        }else if(facing==GameValues.BACKWARD){
+            if(dir==GameValues.FORWARD){
                 y++;
-            }else if(dir==LEFT){
+            }else if(dir==GameValues.LEFT){
                 x++;
-            }else if(dir==RIGHT){
+            }else if(dir==GameValues.RIGHT){
                 x--;
-            }else if(dir==BACKWARD){
+            }else if(dir==GameValues.BACKWARD){
                 y--;
             }
         }
@@ -87,36 +101,36 @@ public class Player extends Character {
         coordinates[2]=x;
     }
     public void turnBack(){
-        if(facing==FORWARD){
-            facing=BACKWARD;
-        }else if(facing==LEFT){
-            facing=RIGHT;
-        }else if(facing==RIGHT){
-            facing=LEFT;
+        if(facing==GameValues.FORWARD){
+            facing=GameValues.BACKWARD;
+        }else if(facing==GameValues.LEFT){
+            facing=GameValues.RIGHT;
+        }else if(facing==GameValues.RIGHT){
+            facing=GameValues.LEFT;
         }else{
-            facing=FORWARD;
+            facing=GameValues.FORWARD;
         }
     }
     public void turnLeft(){
-        if(facing==FORWARD){
-            facing=LEFT;
-        }else if(facing==LEFT){
-            facing=BACKWARD;
-        }else if(facing==RIGHT){
-            facing=FORWARD;
+        if(facing==GameValues.FORWARD){
+            facing=GameValues.LEFT;
+        }else if(facing==GameValues.LEFT){
+            facing=GameValues.BACKWARD;
+        }else if(facing==GameValues.RIGHT){
+            facing=GameValues.FORWARD;
         }else{
-            facing=RIGHT;
+            facing=GameValues.RIGHT;
         }
     }
     public void turnRight(){
-        if(facing==FORWARD){
-            facing=RIGHT;
-        }else if(facing==LEFT){
-            facing=FORWARD;
-        }else if(facing==RIGHT){
-            facing=BACKWARD;
+        if(facing==GameValues.FORWARD){
+            facing=GameValues.RIGHT;
+        }else if(facing==GameValues.LEFT){
+            facing=GameValues.FORWARD;
+        }else if(facing==GameValues.RIGHT){
+            facing=GameValues.BACKWARD;
         }else{
-            facing=LEFT;
+            facing=GameValues.LEFT;
         }
     }
 
@@ -147,7 +161,7 @@ public class Player extends Character {
         if(inventory.size()<=0){
             return name+"'s Inventory is empty.";
         }else {
-        	String out="========"+name+"\'s Inventory=======\nWeight:\t+"+load+"\\"+maxWeight;//"name\tweight\tworth");
+        	String out="========"+name+"\'s Inventory=======\nWeight:\t+"+load+"\\"+maxWeight+"\n";//"name\tweight\tworth");
             int i = 0;
             for (Item itm : inventory) {
                 out+=i + ") " + itm.toString();

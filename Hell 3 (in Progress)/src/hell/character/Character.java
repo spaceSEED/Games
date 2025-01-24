@@ -7,6 +7,7 @@ import hell.exceptions.CannotEquipException;
 import hell.items.Armor;
 import hell.items.Equipable;
 import hell.items.Item;
+import hell.items.Weapon;
 /**
  * Created by Liam on 11/6/2016.
  */
@@ -75,6 +76,7 @@ public class Character {
     public int getLevel(){ return level;}
     public void levelUp(){level++; boostattributes(); levelup=100*level;}
     public int getStrength(){return strength;}
+    public int getAttackStrength(){return strength+getEquippedStrength();}
     public int getAgility(){return agility;}
     public int getCharisma(){return charisma;}
     public int getIntelligence(){return intelligence;}
@@ -100,7 +102,8 @@ public class Character {
         return health;
     }
     public void loseHP(double n){
-        hp-=n;
+    	if(n>0)
+    		hp-=n;
     }
     public void gainHP(double n){ hp+=n; if(hp>health){hp=health;}}
     public void incHealth(double h){
@@ -140,7 +143,7 @@ public class Character {
     }
 
     public boolean isEquipped(Item a){
-        return equipped.containsValue((Equipable)a);
+        return a.isEquipable()?((Equipable)a).getEquipped():false;
     }
 
 
@@ -164,27 +167,27 @@ public class Character {
             Equipable e = (Equipable) a;
             if (e.getType().equals("Helmet")) {
                 if (equipped.containsKey("Head")) {
-                    inventory.add((Item) equipped.get("Head"));
+                    equipped.get("Head").setEquipped(false);
                 }
                 equipped.put("Head", e);
             } else if (e.getType().equals("Boots")) {
                 if (equipped.containsKey("Feet")) {
-                    inventory.add((Item) equipped.get("Feet"));
+                    equipped.get("Feet").setEquipped(false);
                 }
                 equipped.put("Feet", e);
             } else if (e.getType().equals("Gloves")) {
                 if (equipped.containsKey("Hands")) {
-                    inventory.add((Item) equipped.get("Hands"));
+                    equipped.get("Hands").setEquipped(false);
                 }
                 equipped.put("Hands", e);
             } else if (e.getType().equals("Chassis")) {
                 if (equipped.containsKey("Chest")) {
-                    inventory.add((Item) equipped.get("Chest"));
+                    equipped.get("Chest").setEquipped(false);
                 }
                 equipped.put("Chest", e);
             } else if (e.getType().equals("Shield")) {
                 if (equipped.containsKey("HandL")) {
-                    inventory.add((Item) equipped.get("HandL"));
+                    equipped.get("HandL").setEquipped(false);
                     equipped.put("HandL", e);
                 } else if (equipped.containsKey("HandR") && equipped.get("HandR").getType().indexOf("_2Hand") >= 0) {
                     throw new CannotEquipException("Two-handed Item already Equipped");
@@ -193,21 +196,33 @@ public class Character {
                 }
             } else if (e.getType().equals("Sword")) {
                 if (equipped.containsKey("HandR")) {
-                    inventory.add((Item) equipped.get("HandR"));
+                    equipped.get("HandR").setEquipped(false);
                 }
                 equipped.put("HandR", e);
             }else if (e.getType().equals("Bow")) {
                 if (equipped.containsKey("HandR")) {
-                    inventory.add((Item) equipped.get("HandR"));
+                    equipped.get("HandR").setEquipped(false);
                     if (equipped.containsKey("HandL")) {
-                        inventory.add((Item) equipped.remove("HandL"));
+                        equipped.remove("HandL").setEquipped(false);
                     }
                 }
                 equipped.put("HandR", e);
             }
+            e.setEquipped(true);
         }else{
             throw new CannotEquipException("Not an Equipable Item");
         }
+    }
+    
+    public int getEquippedStrength() {
+    	int str=0;
+    	Equipable itm=equipped.get("HandR");
+    	if(itm!=null&&itm.getType().equals("Sword")){
+    		str+=((Weapon)itm).getAttack();
+    	}else if(itm!=null&&itm.getType().equals("Bow")) {
+    		str+=((Weapon)itm).getAttack();
+    	}
+		return str;
     }
 
 
